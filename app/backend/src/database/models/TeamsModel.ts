@@ -9,7 +9,7 @@ import db from '.';
 
 class TeamsModel extends Model<InferAttributes<TeamsModel>, InferCreationAttributes<TeamsModel>> {
   declare id: CreationOptional<number>;
-  declare teamName: string
+  declare teamName: string;
 }
 
 TeamsModel.init({
@@ -22,13 +22,13 @@ TeamsModel.init({
   teamName: {
     type: DataTypes.STRING,
     allowNull: false,
-    field: "team_name"
+    field: 'team_name',
   }
 }, {
   sequelize: db,
   modelName: 'teams',
   underscored: true,
   timestamps: false,
-})
+});
 
 export default TeamsModel;

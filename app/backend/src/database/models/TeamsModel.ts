@@ -23,7 +23,7 @@ TeamsModel.init({
     type: DataTypes.STRING,
     allowNull: false,
     field: 'team_name',
-  }
+  },
 }, {
   sequelize: db,
   modelName: 'teams',

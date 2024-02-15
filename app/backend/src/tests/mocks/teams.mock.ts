@@ -7,4 +7,9 @@ const teams = [{
 }
 ]
 
-export { teams };
+const oneTeam = [{
+  id: 3,
+  teamName: 'Flamengo',
+}]
+
+export { teams, oneTeam };

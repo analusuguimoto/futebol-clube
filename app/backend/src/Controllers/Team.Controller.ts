@@ -13,6 +13,17 @@ class TeamsController {
     const allTeams = await this._teamService.getListOfTeams();
     res.status(statushttp(allTeams.status)).json(allTeams.data);
   }
+
+  async getTeamById(req: Request, res: Response) {
+    const { id } = req.params;
+    const teamById = await this._teamService.getTeamById(+id);
+
+    if (teamById.status === 'SUCCESS') {
+      return res.status(statushttp(teamById.status)).json(teamById.data);
+    }
+
+    res.status(statushttp(teamById.status)).json(teamById.data);
+  }
 }
 
 export default TeamsController;

@@ -17,6 +17,21 @@ class TeamsServices {
       data: listOfTeams,
     };
   }
+
+  async getTeamById(id: number): Promise<ServiceResponse<TeamsIf>> {
+    const teamById = await this._team.getTeamById(id);
+    if (!teamById) {
+      return {
+        status: 'NOT_FOUND',
+        data: { message: 'Team not found' },
+      };
+    }
+
+    return {
+      status: 'SUCCESS',
+      data: teamById,
+    };
+  }
 }
 
 export default TeamsServices;

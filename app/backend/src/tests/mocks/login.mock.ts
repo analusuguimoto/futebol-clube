@@ -20,4 +20,16 @@ const notInDb = {
   password: 'fakePassword',
 }
 
-export {noPass, noEmail, userdb, notInDb}
+const userSeeder = {
+    username: 'User',
+    role: 'user',
+    email: 'user@user.com',
+    password: '$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO',
+}
+
+const userSeed = {
+  email: 'user@user.com',
+  password: 'secret_user'
+}
+
+export {noPass, noEmail, userdb, notInDb, userSeeder, userSeed}

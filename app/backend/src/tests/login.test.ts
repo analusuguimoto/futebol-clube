@@ -6,7 +6,8 @@ import { app } from '../app';
 import LoginAuthenticator from '../middlewares/loginAuthenticator';
 import UserModels from '../database/models/UsersModel';
 // import UserModel from '../model/user.model';
-import { noPass, noEmail, userdb, notInDb } from './mocks/login.mock'
+import { noPass, noEmail, userSeeder, notInDb, userSeed } from './mocks/login.mock';
+import * as jwt from 'jsonwebtoken';
 
 
 chai.use(chaiHttp);
@@ -28,11 +29,21 @@ describe('Testing login and authentications', () => {
   })
 
   it('Should return an error if email is not in the db', async () => {
-    const modelBuild = UserModels.build(userdb);
     sinon.stub(UserModels, 'findOne').resolves(null);
 
     const { status, body } = await chai.request(app).post('/login').send(notInDb);
     expect(status).to.be.equal(401);
     expect(body).to.be.deep.equal({message: 'Invalid email or password'})
+  })
+
+  it('should return a token when valid credentials are given', async () => {
+    const userModel = UserModels.build(userSeeder);
+    sinon.stub(jwt, 'sign').resolves('any-token');
+    sinon.stub(UserModels, 'findOne').resolves(userModel);
+    sinon.stub(LoginAuthenticator, 'loginValidation');
+
+    const { status, body } = await chai.request(app).post('/login').send(userSeed)
+    expect(status).to.be.equal(200);
+    expect(body).to.have.property('token');
   })
 })

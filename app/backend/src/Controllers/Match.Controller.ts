@@ -25,6 +25,19 @@ class MatchController {
 
     res.status(statushttp(list.status)).json(list.data);
   }
+
+  async updateStatus(req: Request, res: Response) {
+    const { id } = req.params;
+    const updated = await this._service.updateStatus(+id);
+
+    res.status(statushttp(updated.status)).json(updated.data);
+  }
+
+  async updateMatchPoints(req: Request, res:Response) {
+    const { id } = req.params;
+    const matchupdated = await this._service.updateMatchPoints(+id, req.body);
+    res.status(statushttp(matchupdated.status)).json(matchupdated.data);
+  }
 }
 
 export default MatchController;

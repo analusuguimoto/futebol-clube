@@ -1,3 +1,4 @@
+import MatchPoints from '../Interfaces/MatchPoints';
 import MatchesModel from '../database/models/MatchesModel';
 import AllMatchesIf from '../Interfaces/AllMatchesIf';
 import MatchesIf from '../Interfaces/MatchesIf';
@@ -22,6 +23,24 @@ class MatchModel implements AllMatchesIf {
       ],
     });
     return list;
+  }
+
+  async updateStatus(id: MatchesIf['id']): Promise<MatchesIf | undefined> {
+    const match = await this._matchModel.findByPk(id);
+
+    if (!match) return undefined;
+    if (match) {
+      await this._matchModel.update({ inProgress: false }, { where: { id: match.id } });
+    }
+  }
+
+  async updateInProgress(id: MatchesIf['id'], points: MatchPoints): Promise<MatchesIf | undefined> {
+    const findMatch = await this._matchModel.findByPk(id);
+    if (!findMatch) return undefined;
+    if (findMatch) {
+      await this._matchModel.update({ homeTeamGoals: points.homeTeamGoals,
+        awayTeamGoals: points.awayTeamGoals }, { where: { id: findMatch.id } });
+    }
   }
 }
 

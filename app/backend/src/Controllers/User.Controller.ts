@@ -17,7 +17,7 @@ class UserController {
 
   async getRole(req: Request, res:Response) {
     const { user } = req.body;
-    console.log('string aqui', user);
+    // console.log('string aqui', user);
     const service = await this._userService.getUserRole(user.email);
     res.status(statushttp(service.status)).json(service.data);
   }

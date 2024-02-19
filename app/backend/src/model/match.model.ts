@@ -42,6 +42,19 @@ class MatchModel implements AllMatchesIf {
         awayTeamGoals: points.awayTeamGoals }, { where: { id: findMatch.id } });
     }
   }
+
+  async createMatch(info: MatchesIf): Promise<MatchesIf> {
+    const { homeTeamId, homeTeamGoals, awayTeamGoals, awayTeamId } = info;
+    const dbCreate = await this._matchModel.create({
+      homeTeamId,
+      homeTeamGoals,
+      awayTeamGoals,
+      awayTeamId,
+      inProgress: true,
+    });
+
+    return dbCreate;
+  }
 }
 
 export default MatchModel;

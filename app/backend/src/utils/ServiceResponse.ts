@@ -7,7 +7,8 @@ export type ServiceResponseSuccess<T> = {
   data: T
 };
 
-type ServiceResponseErrorType = 'BAD_REQUEST' | 'UNAUTHORIZED' | 'NOT_FOUND';
+type ServiceResponseErrorType = 'BAD_REQUEST' | 'UNAUTHORIZED' | 'NOT_FOUND'
+| 'UNPROCESSABLE_ENTITY';
 
 export type ServiceResponseError = {
   status: ServiceResponseErrorType,

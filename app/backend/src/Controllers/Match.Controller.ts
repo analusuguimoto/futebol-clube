@@ -38,6 +38,11 @@ class MatchController {
     const matchupdated = await this._service.updateMatchPoints(+id, req.body);
     res.status(statushttp(matchupdated.status)).json(matchupdated.data);
   }
+
+  async createMatch(req: Request, res: Response) {
+    const created = await this._service.createMatch(req.body);
+    res.status(statushttp(created.status)).json(created.data);
+  }
 }
 
 export default MatchController;

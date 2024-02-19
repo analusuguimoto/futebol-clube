@@ -10,6 +10,10 @@ matchesRouter.get('/', (req: Request, res: Response) => {
   newMatchesController.getListOfMatches(req, res);
 });
 
+matchesRouter.post('/', tokenAuth.validate, (req: Request, res: Response) => {
+  newMatchesController.createMatch(req, res);
+});
+
 matchesRouter.patch('/:id/finish', tokenAuth.validate, (req: Request, res: Response) => {
   newMatchesController.updateStatus(req, res);
 });

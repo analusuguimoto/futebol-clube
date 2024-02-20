@@ -1,5 +1,5 @@
 import { Model, QueryInterface, DataTypes } from 'sequelize';
-import MatchesIf from '../../Interfaces/MatchesIf';
+import { MatchesIf } from '../../Interfaces/MatchesIf';
 
 export default {
   up(queryInterface: QueryInterface) {

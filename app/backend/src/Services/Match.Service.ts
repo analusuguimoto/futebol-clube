@@ -1,8 +1,11 @@
-import MatchesIf from '../Interfaces/MatchesIf';
+import { MatchesIf } from '../Interfaces/MatchesIf';
 import { ServiceResponse } from '../utils/ServiceResponse';
 import MatchModel from '../model/match.model';
 import MatchPoints from '../Interfaces/MatchPoints';
 import GetTheTeams from '../model/team.model';
+import LeaderboardIf from '../Interfaces/LeaderboardIf';
+import leaderboard from '../utils/leaderboard';
+import teamClassification from '../utils/classification';
 
 class MatchService {
   private _match: MatchModel;
@@ -42,8 +45,8 @@ class MatchService {
     const HT = await this._teams.getTeamById(+homeTeamId);
     const AT = await this._teams.getTeamById(+awayTeamId);
 
-    console.log('home', HT);
-    console.log('away', AT);
+    // console.log('home', HT);
+    // console.log('away', AT);
 
     if (!HT || !AT) {
       return { status: 'NOT_FOUND', data: { message: 'There is no team with such id!' } };
@@ -58,6 +61,34 @@ class MatchService {
     return {
       status: 'CREATED',
       data: createdMatch,
+    };
+  }
+
+  async createLeaderboard(): Promise<ServiceResponse<LeaderboardIf[]>> {
+    const matches = await this._match.getListOfMatches();
+    // console.log('aqui estao as matches', matches);
+
+    const board = leaderboard(matches, 'homeTeam');
+    // console.log('aqui o board', board);
+
+    const TeamEfficiency = board.map((value) => {
+      const previousData = value;
+      // const efficiencyValue = value.totalGames !== 0
+      //   ? ((value.totalPoints / (value.totalGames * 3)) * 100)
+      //   : 0;
+      return {
+        ...previousData,
+        efficiency: Number(((value.totalPoints / (value.totalGames * 3)) * 100)).toFixed(2), // depois colocar o to fixed
+      };
+    });
+
+    console.log('efficiency', TeamEfficiency);
+
+    const teamClass = teamClassification(TeamEfficiency);
+
+    return {
+      status: 'SUCCESS',
+      data: teamClass,
     };
   }
 }

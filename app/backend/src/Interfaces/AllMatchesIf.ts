@@ -1,4 +1,4 @@
-import MatchesIf from './MatchesIf';
+import { MatchesIf } from './MatchesIf';
 
 interface AllMatchesIf {
   getListOfMatches(): Promise<MatchesIf[]>

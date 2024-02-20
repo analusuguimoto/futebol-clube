@@ -43,6 +43,11 @@ class MatchController {
     const created = await this._service.createMatch(req.body);
     res.status(statushttp(created.status)).json(created.data);
   }
+
+  async createLeaderboard(_req: Request, res: Response) {
+    const board = await this._service.createLeaderboard();
+    res.status(statushttp(board.status)).json(board.data);
+  }
 }
 
 export default MatchController;

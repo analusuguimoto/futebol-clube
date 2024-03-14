@@ -5,7 +5,11 @@ const boardRouter = Router();
 const newMatchesController = new MatchController();
 
 boardRouter.get('/home', (req: Request, res:Response) => {
-  newMatchesController.createLeaderboard(req, res);
+  newMatchesController.homeLeaderboard(req, res);
+});
+
+boardRouter.get('/away', (req: Request, res:Response) => {
+  newMatchesController.awayLeaderboard(req, res);
 });
 
 export default boardRouter;

@@ -36,7 +36,27 @@ const pointCalculator = (team: LeaderboardIf, match: MatchesNameIf) => {
   return teamInfo;
 };
 
-const leaderboard = (matches: MatchesNameIf[], team: TeamType): LeaderboardIf[] => {
+const awayPointCalculator = (team: LeaderboardIf, match: MatchesNameIf) => {
+  const teamInfo = { ...team };
+  teamInfo.totalGames += 1;
+  teamInfo.goalsFavor += match.awayTeamGoals;
+  teamInfo.goalsOwn += match.homeTeamGoals;
+  teamInfo.goalsBalance = teamInfo.goalsFavor - teamInfo.goalsOwn;
+
+  if (match.awayTeamGoals > match.homeTeamGoals) {
+    teamInfo.totalPoints += 3;
+    teamInfo.totalVictories += 1;
+  } else if (match.homeTeamGoals === match.awayTeamGoals) {
+    teamInfo.totalPoints += 1;
+    teamInfo.totalDraws += 1;
+  } else {
+    teamInfo.totalLosses += 1;
+  }
+
+  return teamInfo;
+};
+
+export const leaderboardHome = (matches: MatchesNameIf[], team: TeamType): LeaderboardIf[] => {
   const updated: Record<string, LeaderboardIf> = {};
 
   matches.forEach((match) => {
@@ -55,4 +75,21 @@ const leaderboard = (matches: MatchesNameIf[], team: TeamType): LeaderboardIf[] 
   return arr;
 };
 
-export default leaderboard;
+export const leaderboardAway = (matches: MatchesNameIf[], team: TeamType): LeaderboardIf[] => {
+  const updated: Record<string, LeaderboardIf> = {};
+
+  matches.forEach((match) => {
+    if (match.inProgress) return;
+    const chosenTeam = match[team].teamName;
+
+    if (!updated[chosenTeam]) {
+      updated[chosenTeam] = initialTeam(chosenTeam);
+    }
+
+    const calculate = awayPointCalculator(updated[chosenTeam], match);
+    updated[chosenTeam] = calculate;
+  });
+
+  const arr = Object.values(updated);
+  return arr;
+};

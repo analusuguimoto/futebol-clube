@@ -44,8 +44,13 @@ class MatchController {
     res.status(statushttp(created.status)).json(created.data);
   }
 
-  async createLeaderboard(_req: Request, res: Response) {
+  async homeLeaderboard(_req: Request, res: Response) {
     const board = await this._service.createLeaderboard();
+    res.status(statushttp(board.status)).json(board.data);
+  }
+
+  async awayLeaderboard(_req: Request, res: Response) {
+    const board = await this._service.awayLeaderboard();
     res.status(statushttp(board.status)).json(board.data);
   }
 }

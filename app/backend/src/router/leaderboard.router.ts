@@ -12,4 +12,8 @@ boardRouter.get('/away', (req: Request, res:Response) => {
   newMatchesController.awayLeaderboard(req, res);
 });
 
+boardRouter.get('/', (req: Request, res:Response) => {
+  newMatchesController.completeLeaderboard(req, res);
+});
+
 export default boardRouter;

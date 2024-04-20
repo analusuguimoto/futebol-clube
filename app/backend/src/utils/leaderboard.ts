@@ -93,3 +93,28 @@ export const leaderboardAway = (matches: MatchesNameIf[], team: TeamType): Leade
   const arr = Object.values(updated);
   return arr;
 };
+
+export const fullLeaderboard = (matches: MatchesNameIf[]): LeaderboardIf[] => {
+  const updated: Record<string, LeaderboardIf> = {};
+
+  matches.forEach((match) => {
+    const { homeTeam, awayTeam, inProgress } = match;
+    if (inProgress) return;
+    if (!updated[homeTeam.teamName]) {
+      updated[homeTeam.teamName] = initialTeam(homeTeam.teamName);
+    }
+
+    if (!updated[awayTeam.teamName]) {
+      updated[awayTeam.teamName] = initialTeam(awayTeam.teamName);
+    }
+    const homeTeamInfo = updated[homeTeam.teamName];
+    const awayTeamInfo = updated[awayTeam.teamName];
+
+    const calculateHome = pointCalculator(homeTeamInfo, match);
+    const calculateAway = awayPointCalculator(awayTeamInfo, match);
+
+    updated[homeTeam.teamName] = calculateHome;
+    updated[awayTeam.teamName] = calculateAway;
+  });
+  return Object.values(updated);
+};

@@ -4,7 +4,7 @@ import MatchModel from '../model/match.model';
 import MatchPoints from '../Interfaces/MatchPoints';
 import GetTheTeams from '../model/team.model';
 import LeaderboardIf from '../Interfaces/LeaderboardIf';
-import { leaderboardHome, leaderboardAway } from '../utils/leaderboard';
+import { leaderboardHome, leaderboardAway, fullLeaderboard } from '../utils/leaderboard';
 import teamClassification from '../utils/classification';
 
 class MatchService {
@@ -64,7 +64,7 @@ class MatchService {
     };
   }
 
-  async createLeaderboard(): Promise<ServiceResponse<LeaderboardIf[]>> {
+  async homeLeaderboard(): Promise<ServiceResponse<LeaderboardIf[]>> {
     const matches = await this._match.getListOfMatches();
     // console.log('aqui estao as matches', matches);
 
@@ -82,7 +82,7 @@ class MatchService {
       };
     });
 
-    console.log('efficiency', TeamEfficiency);
+    // console.log('efficiency', TeamEfficiency);
 
     const teamClass = teamClassification(TeamEfficiency);
 
@@ -110,6 +110,25 @@ class MatchService {
 
     const teamClass = teamClassification(TeamEfficiency);
 
+    return {
+      status: 'SUCCESS',
+      data: teamClass,
+    };
+  }
+
+  async completeLeaderboard(): Promise<ServiceResponse<LeaderboardIf[]>> {
+    const matches = await this._match.getListOfMatches();
+    const board = fullLeaderboard(matches);
+
+    const TeamEfficiency = board.map((value) => {
+      const teamData = value;
+      return {
+        ...teamData,
+        efficiency: Number(((value.totalPoints / (value.totalGames * 3)) * 100)).toFixed(2),
+      };
+    });
+
+    const teamClass = teamClassification(TeamEfficiency);
     return {
       status: 'SUCCESS',
       data: teamClass,

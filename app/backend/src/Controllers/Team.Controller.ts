@@ -18,10 +18,6 @@ class TeamsController {
     const { id } = req.params;
     const teamById = await this._teamService.getTeamById(+id);
 
-    if (teamById.status === 'SUCCESS') {
-      return res.status(statushttp(teamById.status)).json(teamById.data);
-    }
-
     res.status(statushttp(teamById.status)).json(teamById.data);
   }
 }

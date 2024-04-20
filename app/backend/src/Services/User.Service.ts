@@ -11,13 +11,6 @@ class UserServices {
   }
 
   async loginVerify(email: string, password: string): Promise<ServiceResponse<{ token: string }>> {
-    if (!email || !password) {
-      return {
-        status: 'BAD_REQUEST',
-        data: { message: 'All fields must be filled' },
-      };
-    }
-
     const userFind = await this._userModel.findUserByEmail(email);
     if (!userFind) {
       return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };

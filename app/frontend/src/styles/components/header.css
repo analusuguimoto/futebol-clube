@@ -12,6 +12,7 @@
 
 .image-content {
   justify-content: flex-start;
+  cursor: pointer;
 }
 
 .image-content img {

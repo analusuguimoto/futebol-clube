@@ -45,12 +45,17 @@ class MatchController {
   }
 
   async homeLeaderboard(_req: Request, res: Response) {
-    const board = await this._service.createLeaderboard();
+    const board = await this._service.homeLeaderboard();
     res.status(statushttp(board.status)).json(board.data);
   }
 
   async awayLeaderboard(_req: Request, res: Response) {
     const board = await this._service.awayLeaderboard();
+    res.status(statushttp(board.status)).json(board.data);
+  }
+
+  async completeLeaderboard(_req: Request, res: Response) {
+    const board = await this._service.completeLeaderboard();
     res.status(statushttp(board.status)).json(board.data);
   }
 }

@@ -1,10 +1,6 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+# Futebol Clube ⚽️
+O TFC é um site informativo sobre partidas e classificações de futebol.
+
+## Desenvolvimento
+Foi desenvolvida uma API que integra - através do docker-compose - as aplicações para que elas funcionem consumindo um banco de dados.
+Foi construido um back-end dockerizado utilizando modelagem de dados através do Sequelize. O desenvolvimento respeita as regras de negócio providas para popular adequadamente a tabela disponível no front-end que será exibida para a pessoa usuária do sistema.
